@@ -59,6 +59,12 @@ const clientConfig = {
             }
         ],
     },
+    resolve: {
+        extensions: [".js", ".jsx"],
+        alias: {
+            "commonStyles": path.resolve(__dirname, 'app/typescript/core/common.less')
+        }
+    },
     plugins: [
         new HtmlWebPackPlugin({
             template: "./src/resources/index.html",
