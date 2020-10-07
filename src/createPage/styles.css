@@ -1,0 +1,11 @@
+.personal-data-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.text-field {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}

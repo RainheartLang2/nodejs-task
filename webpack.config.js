@@ -1,7 +1,7 @@
 const path = require('path')
-const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const serverConfig = {
     entry: {
@@ -54,6 +54,17 @@ const clientConfig = {
                 }
             },
             {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                    },
+                    {
+                        loader: 'css-loader',
+                    },
+                ]
+            },
+            {
                 test: /\.html$/,
                 use: [{loader: "html-loader"}]
             }
@@ -69,7 +80,7 @@ const clientConfig = {
         new HtmlWebPackPlugin({
             template: "./src/resources/index.html",
             filename: "./resources/index.html",
-            excludeChunks: [ 'server' ]
+            excludeChunks: ['server']
         })
     ]
 }
