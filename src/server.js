@@ -24,7 +24,11 @@ async function createPerson(person) {
 server.use(bodyParser.json());
 
 server.get('/index', (req, res) => {
-    res.sendFile("/resources/index.html", {root: __dirname})
+    res.sendFile("/resources/createPage/index.html", {root: __dirname})
+})
+
+server.get('/list', (req, res) => {
+    res.sendFile("/resources/listPage/index.html", {root: __dirname})
 })
 
 server.get('/*', (req, res) => {

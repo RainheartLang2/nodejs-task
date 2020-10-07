@@ -34,6 +34,7 @@ const serverConfig = {
 const clientConfig = {
     entry: {
         createPage: './src/createPage/createPage.jsx',
+        listPage: './src/listPage/listPage.jsx',
     },
     output: {
         path: path.join(__dirname, 'dist'),
@@ -79,9 +80,14 @@ const clientConfig = {
     plugins: [
         new HtmlWebPackPlugin({
             template: "./src/resources/index.html",
-            filename: "./resources/index.html",
-            excludeChunks: ['server']
-        })
+            filename: "./resources/createPage/index.html",
+            excludeChunks: ['server', 'listPage']
+        }),
+        new HtmlWebPackPlugin({
+            template: "./src/resources/index.html",
+            filename: "./resources/listPage/index.html",
+            excludeChunks: ['server', 'createPage']
+        }),
     ]
 }
 module.exports = [serverConfig, clientConfig]
