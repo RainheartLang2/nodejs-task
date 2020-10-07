@@ -31,11 +31,7 @@ server.get('/list', (req, res) => {
     res.sendFile("/resources/listPage/index.html", {root: __dirname})
 })
 
-server.get('/*', (req, res) => {
-    res.sendFile(req.url, {root: __dirname})
-})
-
-server.post("/save", (req, res) => {
+server.post("/service/save", (req, res) => {
     const validated = validateName(req.body.name)
         && validateMail(req.body.mail)
         && validatePhone(req.body.phone)
@@ -51,6 +47,17 @@ server.post("/save", (req, res) => {
     }).then(() => {
         res.status(200).send("")
     })
+})
+
+server.get("/service/list", (req, res) => {
+    const persons = Person.findAll().then(result => {
+        console.log(result)
+        res.json(result)
+    })
+})
+
+server.get('/*', (req, res) => {
+    res.sendFile(req.url, {root: __dirname})
 })
 
 server.listen(port, (err) => {

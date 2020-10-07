@@ -36,6 +36,7 @@ const clientConfig = {
         createPage: './src/createPage/createPage.jsx',
         listPage: './src/listPage/listPage.jsx',
     },
+    devtool: "inline-source-map",
     output: {
         path: path.join(__dirname, 'dist'),
         publicPath: '/',

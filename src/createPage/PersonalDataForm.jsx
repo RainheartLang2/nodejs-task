@@ -18,7 +18,7 @@ export const PersonalDataForm = () => {
             }
         }).then(() => {
             console.log("fetch")
-            fetch("http://localhost:3000/save", {
+            fetch("http://localhost:3000/service/save", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
