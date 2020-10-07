@@ -2,9 +2,25 @@ import React from "react";
 import {PersonListRow} from "./PersonListRow";
 
 export const PersonsList = ({persons}) => {
-    return (<div>
+    return (<table>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Имя
+            </th>
+            <th>
+                E-mail
+            </th>
+            <th>
+                Телефон
+            </th>
+            <th>
+                Пароль
+            </th>
+        </tr>
         {persons.map(person => {
-                console.log(person)
                 return (
                     <PersonListRow
                         key={person.id}
@@ -13,5 +29,5 @@ export const PersonsList = ({persons}) => {
                 )
             }
         )}
-    </div>)
+    </table>)
 }

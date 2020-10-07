@@ -1,61 +1,100 @@
-import React, {useState} from "react"
+import React, {useCallback, useState} from "react"
 import {Field} from "../components/Field"
-import {validateMail, validateName, validatePassword, validatePhone} from "../common/ValidationUtils";
+import {validateMail, validateName, validatePassword, validatePhone} from "../common/ValidationUtils"
+import {MaskedField} from "../components/MaskedField"
+import {ErrorArea} from "../components/ErrorArea";
+
+const validate = ({
+                      resolve,
+                      reject,
+                      name,
+                      mail,
+                      phone,
+                      password
+                  }) => {
+    if (!validateName(name)) {
+        reject("ФИО введены некорректно")
+    }
+    if (!validateMail(mail)) {
+        reject("Почтовый адрес введён некорректно")
+    }
+    if (!validatePhone(phone)) {
+        reject("Телефон введён некорректно")
+    }
+    if (!validatePassword(password)) {
+        reject("Пароль введён некорректно")
+    }
+    resolve()
+}
+
+const saveData = ({name, mail, phone, password}) => {
+    return fetch("/service/save", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name, mail, phone, password}),
+    })
+}
 
 export const PersonalDataForm = () => {
     const [name, setName] = useState("")
     const [mail, setMail] = useState("")
     const [phone, setPhone] = useState("")
     const [password, setPassword] = useState("")
-    const submitForm = () => {
-        new Promise((resolve, reject) => {
-            if (validateName(name) && validateMail(mail) && validatePhone(phone) && validatePassword(password)) {
-                console.log("resolved")
-                resolve({})
-            } else {
-                console.log("rejected")
-                reject({})
-            }
-        }).then(() => {
-            console.log("fetch")
-            fetch("http://localhost:3000/service/save", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({name, mail, phone, password}),
-            }
-        )}).then(() => {
-            console.log("clear")
-            setName("")
-            setMail("")
-            setPhone("")
-            setPassword("")
-        })
-    }
+    const [error, setError] = useState("")
+    const submitForm = useCallback(() => {
+        new Promise((resolve, reject) => validate({resolve, reject, name, mail, phone, password}))
+            .then(() => saveData({name, mail, phone, password}))
+            .then(response => response.json())
+            .then(body => {
+                if (body.error) {
+                    throw body.error
+                }
+            })
+            .then(() => {
+                setName("")
+                setMail("")
+                setPhone("")
+                setPassword("")
+                setError("")
+            })
+            .catch(error => {
+                setError(error)
+            })
+    })
+
     return (
         <div
             className={"personal-data-form"}
         >
+            <a href={"/list"}>
+                Перейти к списку данных
+            </a>
+            <ErrorArea
+                message={error}
+            />
             <Field
                 label={"ФИО"}
-                onChange={event => setName(event.target.value)}
+                onChange={setName}
                 value={name}
             />
             <Field
                 label={"e-mail"}
-                onChange={event => setMail(event.target.value)}
+                onChange={setMail}
                 value={mail}
             />
-            <Field
+            <MaskedField
+                mask={"9(999)999-99-99"}
+                placeholder={"_(___) ___-__-__"}
                 label={"Телефон"}
-                onChange={event => setPhone(event.target.value)}
+                onChange={setPhone}
                 value={phone}
             />
             <Field
                 label={"Пароль"}
                 type={"password"}
-                onChange={event => setPassword(event.target.value)}
+                onChange={setPassword}
                 value={password}
             />
             <input type={"button"} onClick={submitForm} value={"Сохранить"}/>

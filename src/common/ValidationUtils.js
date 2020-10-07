@@ -1,15 +1,20 @@
+const nameRegExp = new RegExp("^[A-Z,a-z,А-Я,а-я,\\s]{10,255}$")
+const mailRegExp = new RegExp("^(?=.{10,255}$)[A-Z,a-z,\\d]+@[A-Z,a-z,\\d]+$")
+const phoneRegExp = new RegExp("^\\d\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2}$")
+const passwordRegExp = new RegExp("^[\\S]{6,36}$")
+
 export function validateName(value) {
-    return new RegExp("^[A-Z,a-z,А-Я,а-я,\\s]{10,255}$").test(value)
+    return nameRegExp.test(value)
 }
 
 export function validateMail(value) {
-    return new RegExp("^\\S+@\\S+$").test(value)
+    return mailRegExp.test(value)
 }
 
 export function validatePhone(value) {
-    return new RegExp("^\\d{11}$").test(value)
+    return phoneRegExp.test(value)
 }
 
 export function validatePassword(value) {
-    return new RegExp("^\\S{6, 36}$")
+    return passwordRegExp.test(value)
 }

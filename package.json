@@ -13,7 +13,8 @@
       "@babel/react"
     ],
     "plugins": [
-      ["@babel/plugin-transform-runtime",
+      [
+        "@babel/plugin-transform-runtime",
         {
           "regenerator": true
         }
@@ -28,6 +29,7 @@
     "express": "^4.17.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "mysql2": "^2.2.5",
+    "react-input-mask": "^3.0.0-alpha.2",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {

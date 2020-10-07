@@ -37,7 +37,7 @@ server.post("/service/save", (req, res) => {
         && validatePhone(req.body.phone)
         && validatePassword(req.body.password)
     if (!validated) {
-        res.status(200).send({error: "validationError"})
+        res.status(200).send({error: "Ошибка валидации"})
     }
     createPerson({
         name: req.body.name,
@@ -45,7 +45,7 @@ server.post("/service/save", (req, res) => {
         phone: req.body.phone,
         password: req.body.password,
     }).then(() => {
-        res.status(200).send("")
+        res.status(200).send({})
     })
 })
 

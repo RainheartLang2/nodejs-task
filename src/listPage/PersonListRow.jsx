@@ -1,30 +1,41 @@
 import React from "react"
 import {MaskedData} from "../components/MaskedData"
+import {maskMail, maskPassword, maskPhone} from "../common/MaskUtils";
 
 export const PersonListRow = ({person}) => {
     return (
-        <div className={"person-list-row"}>
-            <div className={"person-list-row__data"}>
-                {person.id}
-            </div>
-            <div className={"person-list-row__data"}>
-                {person.name}
-            </div>
-            <MaskedData
-                className={"person-list-row__data"}
-                value={person.mail}
-                mask={value => "****"}
-            />
-            <MaskedData
-                className={"person-list-row__data"}
-                value={person.phone}
-                mask={value => "****"}
-            />
-            <MaskedData
-                className={"person-list-row__data"}
-                value={person.password}
-                mask={value => "****"}
-            />
-        </div>
+        <tr className={"person-list-row"}>
+            <td>
+                <div className={"person-list-row__data"}>
+                    {person.id}
+                </div>
+            </td>
+            <td>
+                <div className={"person-list-row__data"}>
+                    {person.name}
+                </div>
+            </td>
+            <td>
+                <MaskedData
+                    className={"person-list-row__data masked-data"}
+                    value={person.mail}
+                    mask={maskMail}
+                />
+            </td>
+            <td>
+                <MaskedData
+                    className={"person-list-row__data masked-data"}
+                    value={person.phone}
+                    mask={maskPhone}
+                />
+            </td>
+            <td>
+                <MaskedData
+                    className={"person-list-row__data masked-data"}
+                    value={person.password}
+                    mask={maskPassword}
+                />
+            </td>
+        </tr>
     )
 }

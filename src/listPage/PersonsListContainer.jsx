@@ -5,7 +5,7 @@ export const PersonsListContainer = () => {
     const [persons, setPersons] = useState([])
     useEffect(() => {
         (async function loadData() {
-            fetch("http://localhost:3000/service/list", {
+            fetch("/service/list", {
                 method: "GET",
             }).then(async response => {
                 const body = await response.json()
@@ -14,8 +14,13 @@ export const PersonsListContainer = () => {
         })()
     }, [])
     return (
-        <PersonsList
-            persons={persons}
-        />
+        <>
+            <a href={"/index"}>
+                Перейти к вводу данных
+            </a>
+            <PersonsList
+                persons={persons}
+            />
+        </>
     )
 }
