@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 
-export const MaskedData = ({
+export const MaskableData = ({
                                value,
                                mask,
                                masked = true,

@@ -1,5 +1,5 @@
 import React from "react"
-import {MaskedData} from "../components/MaskedData"
+import {MaskableData} from "../components/MaskableData"
 import {maskMail, maskPassword, maskPhone} from "../common/MaskUtils";
 
 export const PersonListRow = ({person}) => {
@@ -16,21 +16,21 @@ export const PersonListRow = ({person}) => {
                 </div>
             </td>
             <td>
-                <MaskedData
+                <MaskableData
                     className={"person-list-row__data masked-data"}
                     value={person.mail}
                     mask={maskMail}
                 />
             </td>
             <td>
-                <MaskedData
+                <MaskableData
                     className={"person-list-row__data masked-data"}
                     value={person.phone}
                     mask={maskPhone}
                 />
             </td>
             <td>
-                <MaskedData
+                <MaskableData
                     className={"person-list-row__data masked-data"}
                     value={person.password}
                     mask={maskPassword}

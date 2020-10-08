@@ -78,11 +78,13 @@ export const PersonalDataForm = () => {
                 label={"ФИО"}
                 onChange={setName}
                 value={name}
+                maxLength={255}
             />
             <Field
                 label={"e-mail"}
                 onChange={setMail}
                 value={mail}
+                maxLength={255}
             />
             <MaskedField
                 mask={"9(999)999-99-99"}
@@ -96,6 +98,7 @@ export const PersonalDataForm = () => {
                 type={"password"}
                 onChange={setPassword}
                 value={password}
+                maxLength={36}
             />
             <input type={"button"} onClick={submitForm} value={"Сохранить"}/>
         </div>

@@ -6,6 +6,7 @@ export const Field = ({
                           label,
                           type = "text",
                           value,
+                          maxLength,
                           onChange,
                       }) => {
     const handleChange = useCallback((event) => onChange(event.target.value), [onChange])
@@ -17,6 +18,7 @@ export const Field = ({
             <input
                 className={"text-field__input"}
                 type={type}
+                maxLength={maxLength}
                 onChange={handleChange}
                 value={value}
             />

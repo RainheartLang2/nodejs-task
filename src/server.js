@@ -11,9 +11,12 @@ const dbUser = process.env.DB_USER || "prCryvKVG3"
 const dbPassword = process.env.DB_PASSWORD || "cjJSshUFqe"
 const dbScheme = process.env.DB_SCHEME || "prCryvKVG3"
 
-console.log(`mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbScheme}`)
-
-const sequelize = new Sequelize(`mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbScheme}`)
+const sequelize = new Sequelize(`mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbScheme}`,
+    {
+        define: {
+            timestamps: false,
+        }
+    })
 
 class Person extends Model {
 }
@@ -24,11 +27,6 @@ Person.init({
     phone: DataTypes.STRING,
     password: DataTypes.STRING,
 }, {sequelize, modelName: 'person'})
-
-async function createPerson(person) {
-    await sequelize.sync()
-    Person.create(person)
-}
 
 server.use(bodyParser.json());
 
@@ -48,13 +46,14 @@ server.post("/service/save", (req, res) => {
     if (!validated) {
         res.status(200).send({error: "Ошибка валидации"})
     }
-    createPerson({
-        name: req.body.name,
-        mail: req.body.mail,
-        phone: req.body.phone,
-        password: req.body.password,
-    }).then(() => res.status(200).send({}))
-      .catch(() => res.status(500).send())
+    sequelize.sync()
+        .then(() => Person.create({
+            name: req.body.name,
+            mail: req.body.mail,
+            phone: req.body.phone,
+            password: req.body.password,
+        })).then(() => res.status(200).send({}))
+        .catch(() => res.status(500).send())
 })
 
 server.get("/service/list", (req, res) => {
