@@ -1,20 +1,22 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import {validateMail, validateName, validatePassword, validatePhone} from "./common/ValidationUtils"
-import { Sequelize, Model, DataTypes } from 'sequelize'
+import {Sequelize, Model, DataTypes} from 'sequelize'
 
 const server = express()
 const port = 3000
 
 const sequelize = new Sequelize("mysql://prCryvKVG3:cjJSshUFqe@remotemysql.com:3306/prCryvKVG3")
 
-class Person extends Model {}
+class Person extends Model {
+}
+
 Person.init({
     name: DataTypes.STRING,
     mail: DataTypes.STRING,
     phone: DataTypes.STRING,
     password: DataTypes.STRING,
-}, {sequelize, modelName: 'person' })
+}, {sequelize, modelName: 'person'})
 
 async function createPerson(person) {
     await sequelize.sync()
@@ -24,11 +26,11 @@ async function createPerson(person) {
 server.use(bodyParser.json());
 
 server.get('/index', (req, res) => {
-    res.sendFile("/resources/createPage/index.html", {root: __dirname})
+    res.sendFile("/personalForm.html", {root: __dirname})
 })
 
 server.get('/list', (req, res) => {
-    res.sendFile("/resources/listPage/index.html", {root: __dirname})
+    res.sendFile("/list.html", {root: __dirname})
 })
 
 server.post("/service/save", (req, res) => {
@@ -50,13 +52,11 @@ server.post("/service/save", (req, res) => {
 })
 
 server.get("/service/list", (req, res) => {
-    const persons = Person.findAll().then(result => {
-        console.log(result)
-        res.json(result)
-    })
+    Person.findAll()
+        .then(result => res.json(result))
 })
 
-server.get('/*', (req, res) => {
+server.get('/resources/*', (req, res) => {
     res.sendFile(req.url, {root: __dirname})
 })
 

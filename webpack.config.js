@@ -1,7 +1,6 @@
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const serverConfig = {
     entry: {
@@ -21,7 +20,7 @@ const serverConfig = {
     module: {
         rules: [
             {
-                test: /(.js|.jsx)$/,
+                test: /.js$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader"
@@ -81,12 +80,12 @@ const clientConfig = {
     plugins: [
         new HtmlWebPackPlugin({
             template: "./src/resources/index.html",
-            filename: "./resources/createPage/index.html",
+            filename: "./personalForm.html",
             excludeChunks: ['server', 'listPage']
         }),
         new HtmlWebPackPlugin({
             template: "./src/resources/index.html",
-            filename: "./resources/listPage/index.html",
+            filename: "./list.html",
             excludeChunks: ['server', 'createPage']
         }),
     ]

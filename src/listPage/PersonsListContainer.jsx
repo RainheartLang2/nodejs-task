@@ -4,13 +4,10 @@ import {PersonsList} from "./PersonsList";
 export const PersonsListContainer = () => {
     const [persons, setPersons] = useState([])
     useEffect(() => {
-        (async function loadData() {
-            fetch("/service/list", {
-                method: "GET",
-            }).then(async response => {
-                const body = await response.json()
-                setPersons(body)
-            })
+        (function loadData() {
+            fetch("/service/list", {method: "GET"})
+                .then(response => response.json())
+                .then(body => setPersons(body))
         })()
     }, [])
     return (
