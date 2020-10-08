@@ -1,0 +1,27 @@
+version: "3.2"
+services:
+  nodejs:
+    build:
+      context: .
+    image: nodejs-task
+    environment:
+      - DB_HOST=mysql-app
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_SCHEME=scheme
+      - DB_PORT=3306
+    volumes:
+      - ./www/:/var/www/html/
+    ports:
+      - "3000:3000"
+    container_name: nodejs-task
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=scheme
+    ports:
+      - "3306:3306"
+    container_name: mysql-app

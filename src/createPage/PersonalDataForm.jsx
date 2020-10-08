@@ -2,7 +2,7 @@ import React, {useCallback, useState} from "react"
 import {Field} from "../components/Field"
 import {validateMail, validateName, validatePassword, validatePhone} from "../common/ValidationUtils"
 import {MaskedField} from "../components/MaskedField"
-import {ErrorArea} from "../components/ErrorArea";
+import {ErrorArea} from "../components/ErrorArea"
 
 const validate = ({
                       resolve,

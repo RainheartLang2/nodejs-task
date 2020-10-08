@@ -4,9 +4,16 @@ import {validateMail, validateName, validatePassword, validatePhone} from "./com
 import {Sequelize, Model, DataTypes} from 'sequelize'
 
 const server = express()
-const port = 3000
+const port = process.env.PORT || 3000
+const dbHost = process.env.DB_HOST || "remotemysql.com"
+const dbPort = process.env.DB_PORT || 3306
+const dbUser = process.env.DB_USER || "prCryvKVG3"
+const dbPassword = process.env.DB_PASSWORD || "cjJSshUFqe"
+const dbScheme = process.env.DB_SCHEME || "prCryvKVG3"
 
-const sequelize = new Sequelize("mysql://prCryvKVG3:cjJSshUFqe@remotemysql.com:3306/prCryvKVG3")
+console.log(`mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbScheme}`)
+
+const sequelize = new Sequelize(`mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbScheme}`)
 
 class Person extends Model {
 }
@@ -46,14 +53,14 @@ server.post("/service/save", (req, res) => {
         mail: req.body.mail,
         phone: req.body.phone,
         password: req.body.password,
-    }).then(() => {
-        res.status(200).send({})
-    })
+    }).then(() => res.status(200).send({}))
+      .catch(() => res.status(500).send())
 })
 
 server.get("/service/list", (req, res) => {
     Person.findAll()
         .then(result => res.json(result))
+        .catch(() => res.status(500).send())
 })
 
 server.get('/resources/*', (req, res) => {
@@ -62,7 +69,7 @@ server.get('/resources/*', (req, res) => {
 
 server.listen(port, (err) => {
     if (err) {
-        return console.log('something bad happened', err)
+        return console.log('initialize error: ', err)
     }
     console.log(`server is listening on ${port}`)
 })

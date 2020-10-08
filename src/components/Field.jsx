@@ -1,6 +1,6 @@
 import React from "react"
 
-const {useCallback} = require("react");
+const {useCallback} = require("react")
 
 export const Field = ({
                           label,

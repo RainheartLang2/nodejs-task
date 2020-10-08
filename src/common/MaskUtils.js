@@ -1,5 +1,5 @@
 export function maskPassword(value) {
-    return "*".repeat(value.length)
+    return value.replace(/./g, '*')
 }
 
 export function maskMail(value) {
